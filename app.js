@@ -11,48 +11,10 @@ const emailFrom = config.emailFrom;
 const emailTo = config.emailReceipient.to;
 const emailCc = config.emailReceipient.cc;
 
-
 let TASK_QUEUE_URL = config.taskQueueUrl;
 let AWS_REGION = config.AWSRegion;
 let sqs = new AWS.SQS({region: AWS_REGION});
 let ses = new AWS.SES({region: AWS_REGION});
-
-
-function sendEmail(toAddr, ccAddr, body, subject) {
-
-    let emailParams = {
-        Destination: {
-            CcAddresses: ccAddr,
-            ToAddresses: toAddr
-        },
-        Message: {
-            Body: {
-                Text: {
-                    Charset: "UTF-8",
-                    Data: body
-                }
-            },
-            Subject: {
-                Charset: 'UTF-8',
-                Data: subject
-            }
-        },
-        Source: emailFrom,
-        ReplyToAddresses: [
-            emialFrom,
-        ],
-    };
-
-    let sendPromise = ses.sendEmail(emailParams).promise();
-
-    sendPromise.then(
-        function (data) {
-            console.log(data.MessageId);
-        }).catch(
-        function (err) {
-            console.error(err, err.stack);
-        });
-}
 
 
 function handleSqsMsg(trackingList, callback){
@@ -102,7 +64,7 @@ function recordMsg(msgInfo, callback){
     });
 
     connection.connect((err) => {
-        // do somthing
+        // do something
             })
         }
     });
@@ -143,6 +105,43 @@ function processMsgBatch(trig, callback) {
            // do something
         }
     });
+}
+
+
+function sendEmail(toAddr, ccAddr, body, subject) {
+
+    let emailParams = {
+        Destination: {
+            CcAddresses: ccAddr,
+            ToAddresses: toAddr
+        },
+        Message: {
+            Body: {
+                Text: {
+                    Charset: "UTF-8",
+                    Data: body
+                }
+            },
+            Subject: {
+                Charset: 'UTF-8',
+                Data: subject
+            }
+        },
+        Source: emailFrom,
+        ReplyToAddresses: [
+            emialFrom,
+        ],
+    };
+
+    let sendPromise = ses.sendEmail(emailParams).promise();
+
+    sendPromise.then(
+        function (data) {
+            console.log(data.MessageId);
+        }).catch(
+        function (err) {
+            console.error(err, err.stack);
+        });
 }
 
 

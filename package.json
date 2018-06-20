@@ -1,0 +1,13 @@
+{
+  "name": "sqs-lambda-framework",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {},
+  "dependencies": {
+    "async": "^2.6.0",
+    "aws-sdk": "^2.235.1",
+    "batch": "^0.6.1",
+    "mysql": "^2.15.0",
+    "xml2js": "^0.4.19"
+  }
+}
